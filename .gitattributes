@@ -1,0 +1,6 @@
+# Bắt buộc LF cho script và tài liệu: bash trên Windows (Git Bash/WSL) lỗi với CRLF.
+* text=auto eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.mjs text eol=lf
+*.yml text eol=lf

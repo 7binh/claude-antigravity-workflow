@@ -1,0 +1,29 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Kiểm cấu trúc skill
+        run: node scripts/validate.mjs
+      - name: Chạy thử script
+        run: |
+          git config --global user.email ci@example.com
+          git config --global user.name ci
+          bash tests/smoke.sh
+      - name: CLI skills nhận đủ skill
+        run: |
+          out=$(npx --yes skills add . --list 2>&1)
+          echo "$out"
+          for s in $(ls skills); do
+            echo "$out" | grep -q "$s" || { echo "CLI không thấy skill: $s"; exit 1; }
+          done
